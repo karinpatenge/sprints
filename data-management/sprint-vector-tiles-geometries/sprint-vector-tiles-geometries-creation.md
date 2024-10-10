@@ -67,7 +67,35 @@ Perform the following steps within the already opened `SQL Worksheet`.
     INDEXTYPE IS MDSYS.SPATIAL_INDEX_V2;</copy>
     ```
 
-## Create Vector Tiles using SQL and accessible them via a REST endpoint
+## Create Vector Tiles using SQL
+
+The SQL function `GET_VECTORTILE` to create the Vector Tiles is included in the PL/SQL Package `SDO_UTIL`. Here is how you can use it:
+
+```sql
+<copy>SELECT SDO_UTIL.GET_VECTORTILE(
+    TABLE_NAME => 'USGS_EARTHQUAKES',
+    GEOM_COL_NAME => 'GEOMETRY',
+    ATT_COL_NAMES => SDO_STRING_ARRAY('LOCATION_NAME','IMPACT_MAGNITUDE','LOCATION_LATITUDE','LOCATION_LONGITUDE'),
+    TILE_X => :x,
+    TILE_Y_PBF => :y,
+    TILE_ZOOM => :z) AS vtile
+FROM DUAL;
+</copy>
+```
+
+Providing the following values for the binding variables:
+
+```txt
+x = 2
+y = 2.pbf
+z = 2
+```
+
+should return a BLOB in column `VTILE`.
+
+To access the Vector Tiles in a web application we are going to set up a REST endpoint with a GET handler.
+
+## Set up a REST endpoint for the Vector Tiles
 
 For the following steps use `Database Actions` > `Development` > `REST`.
 
@@ -102,21 +130,6 @@ For the following steps use `Database Actions` > `Development` > `REST`.
     END;
     /</copy>
     ```
-    The SQL call to create the Vertex Tiles uses the function `GET_VECTORTILE` in the PL/SQL Package `SDO_UTIL`:
-
-    ```sql
-    <copy>SELECT
-        'application/vnd.mapbox-vector-tile' AS mediatype,
-        SDO_UTIL.GET_VECTORTILE(
-            TABLE_NAME => 'USGS_EARTHQUAKES',
-            GEOM_COL_NAME => 'GEOMETRY',
-            ATT_COL_NAMES => SDO_STRING_ARRAY('LOCATION_NAME','IMPACT_MAGNITUDE','LOCATION_LATITUDE','LOCATION_LONGITUDE'),
-            TILE_X => :x,
-            TILE_Y_PBF => :y,
-            TILE_ZOOM => :z) AS vtile
-    FROM DUAL;
-    </copy>
-    ```
 
     The define the handler, use `Database Actions` > `Developer` > `REST`. Click on your module `earthquakes`. Then click on the template `vt/:z/:x/:x`. Then click on `Create Handler`.
 
@@ -129,11 +142,11 @@ For the following steps use `Database Actions` > `Development` > `REST`.
             P_METHOD => 'GET',
             P_SOURCE_TYPE => ords.source_type_media,
             P_SOURCE => 'SELECT
-                    ''''application/vnd.mapbox-vector-tile'''' as mediatype,
+                    ''application/vnd.mapbox-vector-tile'' as mediatype,
                     SDO_UTIL.GET_VECTORTILE(
-                    TABLE_NAME => ''''USGS_EARTHQUAKES'''',
-                    GEOM_COL_NAME => ''''GEOMETRY'''',
-                    ATT_COL_NAMES => sdo_string_array(''''LOCATION_NAME'''',''''IMPACT_MAGNITUDE'''',''''LOCATION_LATITUDE'''',''''LOCATION_LONGITUDE''''),
+                    TABLE_NAME => ''USGS_EARTHQUAKES'',
+                    GEOM_COL_NAME => ''GEOMETRY'',
+                    ATT_COL_NAMES => sdo_string_array(''LOCATION_NAME'',''IMPACT_MAGNITUDE'',''LOCATION_LATITUDE'',''LOCATION_LONGITUDE''),
                     TILE_X => :x,
                     TILE_Y_PBF => :y,
                     TILE_ZOOM => :z) AS vtile
