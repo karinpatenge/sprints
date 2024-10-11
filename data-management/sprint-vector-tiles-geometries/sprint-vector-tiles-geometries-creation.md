@@ -93,9 +93,9 @@ z = 2
 
 should return a BLOB in column `VTILE`.
 
-To access the Vector Tiles in a web application we are going to set up a REST endpoint with a GET handler.
-
 ## Set up a REST endpoint for the Vector Tiles
+
+To access the Vector Tiles in a web application we are going to set up a REST endpoint with a GET handler.
 
 For the following steps use `Database Actions` > `Development` > `REST`.
 
