@@ -68,7 +68,7 @@ Next, perform the following simple steps within the already opened `SQL Workshee
     ```sql
     <copy>CREATE INDEX usgs_earthquakes_sidx
     ON usgs_earthquakes (geometry)
-    INDEXTYPE IS MDSYS.SPATIAL_INDEX_V2;
+    INDEXTYPE IS MDSYS.SPATIAL_INDEX_V2 PARAMETERS ('LAYER_GTYPE=POINT');
     </copy>
     ```
 
