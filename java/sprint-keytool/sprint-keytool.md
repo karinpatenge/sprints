@@ -4,7 +4,7 @@ Duration: 5 minutes
 
 ## keytool Tutorial
 
-[keytool Tutorial](videohub:1_5dpusf5t)
+[keytool Tutorial](videohub:1_5dpusf5t:large)
 
 ### 1 Java Keytool
 This is a quick tutorial on using the `keytool` command. This is a key and certificate management utility that enables users to administer their own public/private key pairs and associated certificates for self-authentication or data integrity.
@@ -19,6 +19,7 @@ Java has a truststore called `cacerts` which resides in the `[JAVA_HOME]/lib/sec
 The security property `keystore.type` in the `java.security` file controls the format for the keystore.
 
 To learn more about the `java.security` file, see [Understand the java.security File](https://livelabs.oracle.com/pls/apex/r/dbpm/livelabs/run-workshop?p210_wid=3905) on LiveLabs.
+
 
 ### 3 How are Keystores and Truststores Used?
 If a client talks to a Java-based server over HTTPS, the server will look up the associated key from its keystore, and present the public key and certificate to the client. The client looks-up these things in its truststore.

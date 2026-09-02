@@ -3,7 +3,7 @@ Duration: 5 minutes
 
 ## Enable SSL debugging in the JDK
 
-[How to Enable SSL Debugging](videohub:1_5vweehhb)
+[How to Enable SSL Debugging](videohub:1_5vweehhb:large)
 
 1. What Java options are needed to enable SSL debugging?
 
@@ -22,7 +22,7 @@ Duration: 5 minutes
 
     - `-Djavax.net.debug=all` turns on JSSE debugging including SSL debugging.
 
-    - `-Djavax.net.debug=ssl` prints only SSL-related information.
+    - **NOTE:** `-Djavax.net.debug=ssl` is currently not functioning as expected; see [JDK-8044609](https://bugs.openjdk.org/browse/JDK-8044609) for details.
 
     If you don't know which option to choose, use the `all` option.
 
@@ -90,7 +90,7 @@ Duration: 5 minutes
 ## Acknowledgements
 **Video** - Amy Wang, Technical Support Engineer, Java Platform Group  
 **Workshop** -  Jason Begy, Principal User Assistance Developer, Java Platform Group  
-**Last Updated By/Date** - Jason Begy,  August 2023
+**Last Updated By/Date** - Jason Begy,  December 2024
 
 
 
